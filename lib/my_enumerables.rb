@@ -1,13 +1,10 @@
 module Enumerable
   def my_each_with_index
-    new_array = []
     counter = 0
     my_each do |x|
-
-      new_array << [x, counter]
-      counter += 2
+      yield(x, counter)
+      counter += 1
     end
-    new_array
   end
 
   def my_select
@@ -52,7 +49,7 @@ module Enumerable
 
   def my_inject(number)
     counter = yield(number, self[0])
-    my_lambda = ->(a,b) { yield(a, b) }
+    my_lambda = -> (a,b) { yield(a, b) }
     my_each { |x| counter = yield(x, counter) }
     if my_lambda.call(0, 1).zero?
       counter
@@ -68,5 +65,4 @@ class Array
       yield i if block_given?
     end
   end
-  include Enumerable
 end
