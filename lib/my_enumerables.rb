@@ -49,6 +49,17 @@ module Enumerable
     my_each { |x| new_array << yield(x) }
     new_array
   end
+
+  def my_inject(number)
+    counter = yield(number, self[0])
+    my_lambda = ->(a,b) { yield(a, b) }
+    my_each { |x| counter = yield(x, counter) }
+    if my_lambda.call(0, 1).zero?
+      counter
+    else
+      counter - self[0]
+    end
+  end
 end
 
 class Array
