@@ -1,7 +1,7 @@
 module Enumerable
-  # Your code goes here
-  def my_each_with_index
-  end
+  # def my_each_with_index
+
+  # end
 
   def my_select
     new_array = []
@@ -15,11 +15,18 @@ module Enumerable
     new_array.length == length
   end
 
+  def my_any?
+    new_array = []
+    my_each { |x| new_array << x if yield(x) == true }
+    new_array.length.positive?
+  end
 end
 
 class Array
   def my_each
-    each { |x| yield x if block_given? }
+    for i in self
+      yield i if block_given?
+    end
   end
   include Enumerable
 end
